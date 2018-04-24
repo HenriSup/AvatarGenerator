@@ -52,22 +52,23 @@ namespace EnvironnementTestGraphics
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string text = "WDF";
+            string text = RandomString(RandomNumber(1,3));
             string fileName = "WDF";
             string folder = "WDF";
             int canvaSize = 64;
-            generateAvatar(text, fileName, folder, canvaSize);
+            string color = RandomColor();
+            generateAvatar(text, fileName, folder, canvaSize, color);
         }
 
-        private void generateAvatar(string text, string fileName, string saveLocation, int canvaSize)
+        private void generateAvatar(string text, string fileName, string saveLocation, int canvaSize, string color)
         {
-            pictureBox1.Size = new Size(canvaSize, canvaSize);
-            this.Controls.Add(pictureBox1);
+            pictureBox2.Size = new Size(canvaSize, canvaSize);
+            this.Controls.Add(pictureBox2);
 
             Bitmap flag = new Bitmap(canvaSize, canvaSize);
             Graphics flagGraphics = Graphics.FromImage(flag);
 
-            Color BackgroundColor = ColorTranslator.FromHtml("#FF8A64");
+            Color BackgroundColor = ColorTranslator.FromHtml(color);
 
             flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
 
@@ -80,15 +81,31 @@ namespace EnvironnementTestGraphics
 
             flagGraphics.DrawString(text, adjustedFont, new SolidBrush(fontColor), new RectangleF(0, 0, canvaSize, canvaSize), drawFormat);
 
-            pictureBox1.Image = flag;
+            pictureBox2.Image = flag;
             flag.Save(@"C:\Users\journel\Desktop\test\64.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
-        public static string RandomString(int length)
+        public string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public string RandomColor()
+        {
+            String[] colors = { "#BA68C8", "#9575CD", "#81C784", "#AED581", "#DCE775", "#FFD54F", "#FFB74D", "#FF8A64" };
+
+            Random random = new Random();
+            int index = random.Next(0, colors.Length);
+            return colors[index];
+        }
+
+        public int RandomNumber(int min, int max)
+        {
+            Random random = new Random();
+            int index = random.Next(min, max+1);
+            return index;
         }
     }
 }
