@@ -104,7 +104,6 @@ namespace EnvironnementTestGraphics
                 {
                     generateAvatar(text, fileName, folder, canvaSize, color, pictureBoxes[i]);
                 }
-                
             }
         }
 
@@ -150,8 +149,9 @@ namespace EnvironnementTestGraphics
         public string RandomColor()
         {
             String[] colors = { "#BA68C8", "#9575CD", "#81C784", "#AED581", "#DCE775", "#FFD54F", "#FFB74D", "#FF8A64" };
-
-            Random random = new Random();
+            Random random1 = new Random();
+            int randomSeed = random1.Next(0, colors.Length);
+            Random random = new Random(randomSeed);
             int index = random.Next(0, colors.Length);
             return colors[index];
         }
