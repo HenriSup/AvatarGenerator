@@ -1,0 +1,12 @@
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.exe.config
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.exe
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.pdb
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csprojResolveAssemblyReference.cache
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.Form1.resources
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.Properties.Resources.resources
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csproj.GenerateResource.Cache
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csproj.CoreCompileInputs.cache
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.exe
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.pdb
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.dll
+C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.xml
