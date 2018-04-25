@@ -10,3 +10,16 @@ C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphic
 C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.pdb
 C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.dll
 C:\Users\journel\source\repos\EnvironnementTestGraphics\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.xml
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.exe.config
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.exe
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\bin\Debug\EnvironnementTestGraphics.pdb
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.dll
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\bin\Debug\Magick.NET-Q16-AnyCPU.xml
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csprojResolveAssemblyReference.cache
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.Form1.resources
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.Properties.Resources.resources
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csproj.GenerateResource.cache
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csproj.CoreCompileInputs.cache
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.csproj.CopyComplete
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.exe
+C:\Users\Noxi\AppData\Roaming\Superpowers\projects\AvatarGenerator\EnvironnementTestGraphics\obj\Debug\EnvironnementTestGraphics.pdb

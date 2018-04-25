@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -88,18 +89,19 @@ namespace EnvironnementTestGraphics
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             string fileName = "WDF";
             string folder = "WDF";
             int canvaSize = 64;
-            
-            
             int repetitions = 36;
+
+           
 
             for (int i=0; i<repetitions;i++)
             {
-                string text = RandomString(RandomNumber(1, 3),true);
-                string color = RandomColor();
+                string text = String.IsNullOrWhiteSpace(textBox2.Text) ? RandomString(RandomNumber(1, 3), true) : textBox2.Text;
+                Regex hexaRegex = new Regex(@"\d+");
+                string color = hexaRegex.Match(textBox1.Text).Success ? textBox1.Text : RandomColor();
+
                 if (i <= pictureBoxes.Count-1)
                 {
                     generateAvatar(text, fileName, folder, canvaSize, color, pictureBoxes[i]);
@@ -116,8 +118,30 @@ namespace EnvironnementTestGraphics
             Graphics flagGraphics = Graphics.FromImage(flag);
 
             Color BackgroundColor = ColorTranslator.FromHtml(color);
+            flagGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+
+            if (radioButton1.Checked)
+            {
+                flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+            }
+            else if (radioButton2.Checked)
+            {
+                flagGraphics.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+            }
+            else
+            {
+                Random gen = new Random();
+                int prob = gen.Next(100);
+                bool randomChoice = prob <= 20;
+                if (randomChoice)
+                {
+                    flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                } else
+                {
+                    flagGraphics.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                }
+            }
 
             var font = new Font("DejaVu", 18, FontStyle.Bold);
             var fontColor = Color.WhiteSmoke;
@@ -129,7 +153,7 @@ namespace EnvironnementTestGraphics
             flagGraphics.DrawString(text, adjustedFont, new SolidBrush(fontColor), new RectangleF(0, 0, canvaSize, canvaSize), drawFormat);
 
             pictureBox.Image = flag;
-            flag.Save(@"C:\Users\journel\Desktop\test\64.png", System.Drawing.Imaging.ImageFormat.Png);
+            flag.Save(@"64.png", System.Drawing.Imaging.ImageFormat.Png);
         }
 
         public string RandomString(int length)
@@ -162,5 +186,6 @@ namespace EnvironnementTestGraphics
             int index = random.Next(min, max+1);
             return index;
         }
+
     }
 }
