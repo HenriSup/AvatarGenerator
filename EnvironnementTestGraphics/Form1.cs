@@ -17,7 +17,8 @@ namespace EnvironnementTestGraphics
     {
         private static Random random = new Random();
         private static List<PictureBox> pictureBoxes = new List<PictureBox>();
-        private string Font = "dejavu";
+        private Font Font;
+        private String[] FontLists;
         public Form1()
         {
             InitializeComponent();
@@ -66,39 +67,11 @@ namespace EnvironnementTestGraphics
             pictureBoxes.Add(pictureBox43);
             pictureBoxes.Add(pictureBox44);
             pictureBoxes.Add(pictureBox45);
+            Font = fontDialog1.Font;
         }
 
-        public Font GetAdjustedFont(Graphics GraphicRef, string GraphicString, Font OriginalFont, int ContainerWidth, int MaxFontSize, int MinFontSize, bool SmallestOnFail)
-        {
-            // We utilize MeasureString which we get via a control instance           
-            for (int AdjustedSize = MaxFontSize; AdjustedSize >= MinFontSize; AdjustedSize = AdjustedSize - 2)
-            {
-                Font TestFont = new Font(OriginalFont.Name, AdjustedSize, OriginalFont.Style);
 
-                // Test the string with the new size
-                SizeF AdjustedSizeNew = GraphicRef.MeasureString(GraphicString, TestFont);
-                int round = (int)Math.Truncate(AdjustedSizeNew.Width);
-
-                if ((ContainerWidth > Convert.ToInt32(AdjustedSizeNew.Width)))
-                {
-                    // Good font, return it
-                    return TestFont;
-                }
-            }
-
-            // If you get here there was no fontsize that worked
-            // return MinimumSize or Original?
-            if (SmallestOnFail)
-            {
-                return new Font(OriginalFont.Name, MinFontSize, OriginalFont.Style);
-            }
-            else
-            {
-                return OriginalFont;
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void generateButtonClick(object sender, EventArgs e)
         {
             int canvaSize = Convert.ToInt32(numericUpDown1.Value);
             int repetitions = pictureBoxes.Count();
@@ -110,7 +83,7 @@ namespace EnvironnementTestGraphics
                 string color = hexaRegex.Match(textBox1.Text).Success ? textBox1.Text : RandomColor();
                 string fileName = "avatar "+ canvaSize.ToString()+"x"+ canvaSize.ToString()+" - " + i.ToString()+".png";
 
-                if (i <= pictureBoxes.Count-1)
+                if (i <= pictureBoxes.Count)
                 {
                     generateAvatar(text, canvaSize, color, pictureBoxes[i], fileName);
                 }
@@ -119,23 +92,30 @@ namespace EnvironnementTestGraphics
 
         private void generateAvatar(string text, int canvaSize, string color,PictureBox pictureBox,string fileName)
         {
-            pictureBox.Size = new Size(canvaSize, canvaSize);
-            this.Controls.Add(pictureBox);
-
             Bitmap background = new Bitmap(canvaSize, canvaSize);
-            Graphics flagGraphics = Graphics.FromImage(background);
-
+            Graphics avatar = Graphics.FromImage(background);
             Color BackgroundColor = ColorTranslator.FromHtml(color);
-            flagGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            Font font = Font;
+            Color fontColor = Color.WhiteSmoke;
+            Font adjustedFont = GetAdjustedFont(avatar, text, font, background.Width, 26, 7, true);
+            StringFormat drawFormat = new StringFormat();
+            string folder = string.Concat(canvaSize.ToString(), "x", canvaSize.ToString(), "\\");
+            string file = string.Concat(folder, fileName);
 
+            avatar.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            pictureBox.Size = new Size(canvaSize, canvaSize);
+            drawFormat.Alignment = StringAlignment.Center;
+            drawFormat.LineAlignment = StringAlignment.Center;
+            avatar.TextRenderingHint = TextRenderingHint.AntiAlias;
+            pictureBox.Image = background;
 
             if (radioButton1.Checked)
             {
-                flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                avatar.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
             }
             else if (radioButton2.Checked)
             {
-                flagGraphics.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                avatar.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
             }
             else
             {
@@ -144,35 +124,25 @@ namespace EnvironnementTestGraphics
                 bool randomChoice = prob <= 20;
                 if (randomChoice)
                 {
-                    flagGraphics.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                    avatar.FillRectangle(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
                 } else
                 {
-                    flagGraphics.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
+                    avatar.FillEllipse(new SolidBrush(BackgroundColor), 0, 0, canvaSize, canvaSize);
                 }
             }
 
-            var font = new Font(Font, 18, FontStyle.Bold);
-            var fontColor = Color.WhiteSmoke;
-            var adjustedFont = GetAdjustedFont(flagGraphics, text, font, background.Width, 26, 7, true);
-            StringFormat drawFormat = new StringFormat();
-            drawFormat.Alignment = StringAlignment.Center;
-            drawFormat.LineAlignment = StringAlignment.Center;
+            avatar.DrawString(text, adjustedFont, new SolidBrush(fontColor), new RectangleF(0, 0, canvaSize, canvaSize), drawFormat);
 
-            flagGraphics.DrawString(text, adjustedFont, new SolidBrush(fontColor), new RectangleF(0, 0, canvaSize, canvaSize), drawFormat);
-
-            pictureBox.Image = background;
-            string folder = string.Concat(canvaSize.ToString(), "x", canvaSize.ToString(), "\\");
             if (!string.IsNullOrWhiteSpace(textBox2.Text))
             {
                 folder = string.Concat(canvaSize.ToString(), "x", canvaSize.ToString()," - ", textBox2.Text.ToString(), "\\");
             }
             
-            Console.WriteLine(folder);
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);
             }
-            string file = string.Concat(folder, fileName);
+
             background.Save(@file, System.Drawing.Imaging.ImageFormat.Png);
         }
 
@@ -215,9 +185,37 @@ namespace EnvironnementTestGraphics
             if (fontDialog1.ShowDialog() != DialogResult.Cancel)
             {
                 label4.Text = fontDialog1.Font.Name;
-                Font = fontDialog1.Font.Name;
-                textBox1.Font = fontDialog1.Font;
-                textBox1.ForeColor = fontDialog1.Color;
+                Font = fontDialog1.Font;
+            }
+        }
+
+        public Font GetAdjustedFont(Graphics GraphicRef, string GraphicString, Font OriginalFont, int ContainerWidth, int MaxFontSize, int MinFontSize, bool SmallestOnFail)
+        {
+            // We utilize MeasureString which we get via a control instance           
+            for (int AdjustedSize = MaxFontSize; AdjustedSize >= MinFontSize; AdjustedSize = AdjustedSize - 2)
+            {
+                Font TestFont = new Font(OriginalFont.Name, AdjustedSize, OriginalFont.Style);
+
+                // Test the string with the new size
+                SizeF AdjustedSizeNew = GraphicRef.MeasureString(GraphicString, TestFont);
+                int round = (int)Math.Truncate(AdjustedSizeNew.Width);
+
+                if ((ContainerWidth > Convert.ToInt32(AdjustedSizeNew.Width)))
+                {
+                    // Good font, return it
+                    return TestFont;
+                }
+            }
+
+            // If you get here there was no fontsize that worked
+            // return MinimumSize or Original?
+            if (SmallestOnFail)
+            {
+                return new Font(OriginalFont.Name, MinFontSize, OriginalFont.Style);
+            }
+            else
+            {
+                return OriginalFont;
             }
         }
     }
