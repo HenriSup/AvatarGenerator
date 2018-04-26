@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,6 +17,7 @@ namespace EnvironnementTestGraphics
     {
         private static Random random = new Random();
         private static List<PictureBox> pictureBoxes = new List<PictureBox>();
+        private string Font = "dejavu";
         public Form1()
         {
             InitializeComponent();
@@ -89,33 +91,30 @@ namespace EnvironnementTestGraphics
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string fileName = "WDF";
-            string folder = "WDF";
-            int canvaSize = 64;
+            int canvaSize = Convert.ToInt32(numericUpDown1.Value);
             int repetitions = 36;
-
-           
 
             for (int i=0; i<repetitions;i++)
             {
                 string text = String.IsNullOrWhiteSpace(textBox2.Text) ? RandomString(RandomNumber(1, 3), true) : textBox2.Text;
                 Regex hexaRegex = new Regex(@"\d+");
                 string color = hexaRegex.Match(textBox1.Text).Success ? textBox1.Text : RandomColor();
+                string fileName = "avatar "+ canvaSize.ToString()+"x"+ canvaSize.ToString()+" - " + i.ToString()+".png";
 
                 if (i <= pictureBoxes.Count-1)
                 {
-                    generateAvatar(text, fileName, folder, canvaSize, color, pictureBoxes[i]);
+                    generateAvatar(text, canvaSize, color, pictureBoxes[i], fileName);
                 }
             }
         }
 
-        private void generateAvatar(string text, string fileName, string saveLocation, int canvaSize, string color,PictureBox pictureBox)
+        private void generateAvatar(string text, int canvaSize, string color,PictureBox pictureBox,string fileName)
         {
             pictureBox.Size = new Size(canvaSize, canvaSize);
             this.Controls.Add(pictureBox);
 
-            Bitmap flag = new Bitmap(canvaSize, canvaSize);
-            Graphics flagGraphics = Graphics.FromImage(flag);
+            Bitmap background = new Bitmap(canvaSize, canvaSize);
+            Graphics flagGraphics = Graphics.FromImage(background);
 
             Color BackgroundColor = ColorTranslator.FromHtml(color);
             flagGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -143,17 +142,29 @@ namespace EnvironnementTestGraphics
                 }
             }
 
-            var font = new Font("DejaVu", 18, FontStyle.Bold);
+            var font = new Font(Font, 18, FontStyle.Bold);
             var fontColor = Color.WhiteSmoke;
-            var adjustedFont = GetAdjustedFont(flagGraphics, text, font, flag.Width, 26, 7, true);
+            var adjustedFont = GetAdjustedFont(flagGraphics, text, font, background.Width, 26, 7, true);
             StringFormat drawFormat = new StringFormat();
             drawFormat.Alignment = StringAlignment.Center;
             drawFormat.LineAlignment = StringAlignment.Center;
 
             flagGraphics.DrawString(text, adjustedFont, new SolidBrush(fontColor), new RectangleF(0, 0, canvaSize, canvaSize), drawFormat);
 
-            pictureBox.Image = flag;
-            flag.Save(@"64.png", System.Drawing.Imaging.ImageFormat.Png);
+            pictureBox.Image = background;
+            string folder = string.Concat(canvaSize.ToString(), "x", canvaSize.ToString(), "\\");
+            if (!string.IsNullOrWhiteSpace(textBox2.Text))
+            {
+                folder = string.Concat(canvaSize.ToString(), "x", canvaSize.ToString()," - ", textBox2.Text.ToString(), "\\");
+            }
+            
+            Console.WriteLine(folder);
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+            string file = string.Concat(folder, fileName);
+            background.Save(@file, System.Drawing.Imaging.ImageFormat.Png);
         }
 
         public string RandomString(int length)
@@ -187,5 +198,18 @@ namespace EnvironnementTestGraphics
             return index;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            fontDialog1.ShowColor = true;
+            fontDialog1.Color = textBox1.ForeColor;
+
+            if (fontDialog1.ShowDialog() != DialogResult.Cancel)
+            {
+                label4.Text = fontDialog1.Font.Name;
+                Font = fontDialog1.Font.Name;
+                textBox1.Font = fontDialog1.Font;
+                textBox1.ForeColor = fontDialog1.Color;
+            }
+        }
     }
 }
