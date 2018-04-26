@@ -57,6 +57,15 @@ namespace EnvironnementTestGraphics
             pictureBoxes.Add(pictureBox34);
             pictureBoxes.Add(pictureBox35);
             pictureBoxes.Add(pictureBox36);
+            pictureBoxes.Add(pictureBox37);
+            pictureBoxes.Add(pictureBox38);
+            pictureBoxes.Add(pictureBox39);
+            pictureBoxes.Add(pictureBox40);
+            pictureBoxes.Add(pictureBox41);
+            pictureBoxes.Add(pictureBox42);
+            pictureBoxes.Add(pictureBox43);
+            pictureBoxes.Add(pictureBox44);
+            pictureBoxes.Add(pictureBox45);
         }
 
         public Font GetAdjustedFont(Graphics GraphicRef, string GraphicString, Font OriginalFont, int ContainerWidth, int MaxFontSize, int MinFontSize, bool SmallestOnFail)
@@ -92,7 +101,7 @@ namespace EnvironnementTestGraphics
         private void button2_Click(object sender, EventArgs e)
         {
             int canvaSize = Convert.ToInt32(numericUpDown1.Value);
-            int repetitions = 36;
+            int repetitions = pictureBoxes.Count();
 
             for (int i=0; i<repetitions;i++)
             {
